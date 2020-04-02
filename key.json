@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "easy-plane-booking",
+  "private_key_id": "9289127e8cc546c84fd84b801f78474a200e13dd",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC0H5zUh1qwIHUX\n9vPMhfdxH423ekS6YWVmIl6yPl0xovrtjtnGv3qCsvUiHLigDigi/TXT5zFfa78k\nG9BpkHSCKU1d+fs/8Zf4ebvN4LReBYhA4bUdZP5BxDbuw26n9lBPmLOJtI2+WyX2\nyc5H4LBUJ+c/z3lck8BDjBec95zwufzlk4OmAjZqZy+/aUQD/nMY6LBWG+bJgn34\nosu7YeOz+byu38rnE0VDEpabrXmnEjkRKW6A563jd8jvbYemHqpa1VJlPYeVX/+T\nnIyuprIWh0C1wO81bhL0lIt/mc2YSAKoRZkyRjnUIQdfvCZiHahvdF2qkeHyKJiG\n9x51SuYTAgMBAAECggEAAMe0RQKzD1k3TfEZXDTmU0dDigcNs3rxgVA7yxd/DX8l\ntBAEJxq0MUsMybwzG9UD3Sbt6+ralA23kwn1zJyTYe7uMVkq+pDAIOjcudxecPEi\n28O+e4/w6UsBa+ZNHTgcCpmK3tlOgIO3izU+NKHR/FinOpJaSwmEHHwdAWaHIk8X\nXzf3yrml5gzpX1Vw/yYZbf98njYwzzNisfSZAuIyBYmEo2TajPYgTkCi/Px5W2Sg\nWWiDicrCtzCfcMYamMdjlB2kPW4Y2xWA/sdAg+vvnpFZN38E7ecl6C/MmbGh2LK2\nV0TAH0QUAE68kLjKz1Siyx2wrjKaQDJeWGundn2EjQKBgQDf6IeQitUCcvWAuDHM\nyd841doD29+qiIjh+WDQTTFpfCByVV3igUb6GfiQbOlkoyVBN64Rh5DqPkpNZgDD\nZpfDqYx5hmvHnZmQCj+Y/8v21LQ6PgBxRKroM5HI2fIATw642oH9ip51mVelBwL0\ndSY8PfZq6Xfj52Pf10H285X4lQKBgQDN8JBf6oavDWl8TGICfrukmlHp7k6ORxzg\n/QoXjsX74y5dhRu8+IEKoY/1/L4PbEPJXlcu//v2WUKPeP/mLTNMwewT4fkG6ESi\nsUa9aP+GChVcl7VI8lib8iF3yuBJdJ03yEUietQr576Gdio1kqvZQD0Kwb+LYFhM\n8dmjPhQyBwKBgEnv1fwj7Azf+zOjH0a5jo2NCG3nyCbe6Rx9pbuDEgL8Kxa2G8d0\n2wQxWUQPws4plV7AzSkas/61zQFb4nqjwQ+qSCnE+ogzAYdv6upR5X8/Y7gryyeb\n/jeo98X0OhZiBMGD3hLkGElK9ocXFqG0oYiZCWrqZ12JhhBfW3f5nZc1AoGBAMdn\nVFQbQPgE04vQZeImlkgmSIRrA9NN1g+f04LF8rwX2FAjT51lPYVutHcpl1pVqTk0\nyNQwduasvP8w2Q8l2xNKfe0uk7L1eWfSoT1LiodeAhsapiUQy22MQI2+efeGG6jk\nmNRu/Dva86c8iVhAQXdldPWSboZk7nrqfqJKvMFHAoGAI8AKSDo1m6d92GWXeRVP\n+za409e/i6ijffnvkIXpxaSxYIB9hbPlvnDdOrvx6xvI2BvVTZE7gBenvSyiSoVk\ndLVsbxeISuTGnpXNYGGebepcBjfL/aI3cJUVxlP64fYXGwYg59eTHOe8Jfy0UwxZ\n7rICNhbG0UmzbLzVVrwmIZY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-vf59u@easy-plane-booking.iam.gserviceaccount.com",
+  "client_id": "103019350334515086085",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-vf59u%40easy-plane-booking.iam.gserviceaccount.com"
+}
