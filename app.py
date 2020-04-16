@@ -1,5 +1,6 @@
 import os
 import firebase_admin
+import json
 from flask import Flask ,request, jsonify
 from firebase_admin import credentials, firestore, initialize_app
 
@@ -12,6 +13,7 @@ db = firestore.client()
 todo_ref_flight = db.collection('flight')
 todo_ref_price = db.collection('price')
 todo_ref_seat = db.collection('seat_availability')
+todo_ref_book = db.collection('booking')
 
 
 @app.route('/addFlight', methods=['POST'])
@@ -266,12 +268,18 @@ def check_flight():
         return jsonify(todo_seat),200
     except Exception as e:
         return f"An Error Occured: {e}"
-        # if len(todo_seat[0])==0 :
-        #     tmp = [doc.get('id') for doc in todo_ref_seat.stream()]
-        #     if date not in tmp:
-        #         todo_ref_seat.document(date).set({"id":date})
-        #     for flight in todo:
-        #         todo_ref_seat.document(date).collection(flight).document(flight).set({"id":flight,"Bs_left":30 ,"Eco_left":250,"F_left":10})
-        #     todo_seat=[]
-        #     todo_seat.append([ (doc.get('id'),doc.get(Class)) for doc in todo_ref_seat.document(date).collection(flight).stream()] )
+
+@app.route('/booking',methods=['POST'])
+def booking():
+    todo_ref_book.document().set(request.json)
+    x = todo_ref_seat.document(request.json['date_depart']).collection(request.json['flight_depart']).document(request.json['flight_depart']).get().get(request.json['Class'])
+    x = x-len(request.json['personal_data'])
+    todo_ref_seat.document(request.json['date_depart']).collection(request.json['flight_depart']).document(request.json['flight_depart']).update({request.json['Class']:x})
+
+    data = json.loads(request.data)
+    if('date_return' in data and 'flight_return' in data):
+        y = todo_ref_seat.document(request.json['date_return']).collection(request.json['flight_return']).document(request.json['flight_return']).get().get(request.json['Class'])
+        y = y-len(request.json['personal_data'])
+        todo_ref_seat.document(request.json['date_return']).collection(request.json['flight_return']).document(request.json['flight_return']).update({request.json['Class']:y})
+    return jsonify({"success": True}), 200
 
