@@ -177,7 +177,7 @@ def check_seat():
             if date not in tmp:
                 todo_ref_seat.document(date).set({"id":date})
             for flight in todo:
-                todo_ref_seat.document(date).collection(flight).document(flight).set({"id":flight,"Bs_left":30 ,"Eco_left":250,"F_left":10})
+                todo_ref_seat.document(date).collection(flight).document(flight).set({"id":flight,"Bs_left":30 ,"Eco_left":250,"F_left":10, "Bs_booked":[], "Eco_booked":[], "F_booked":[]})
             todo_seat=[]
             todo_seat.append([ (doc.get('id'),doc.get(Class)) for doc in todo_ref_seat.document(date).collection(flight).stream()] )
 
@@ -221,6 +221,31 @@ def read_seat():
     except Exception as e:
         return f"An Error Occured: {e}"
 
+@app.route('/getBookedSeat', methods=['GET'])
+def booked_seat():
+    """
+        read() : Fetches documents from Firestore collection as JSON.
+        todo : Return document that matches query ID.
+        all_todos : Return all documents.
+    """
+    try:
+        # Check if ID was passed to URL query
+        date_depart = request.args.get('date_depart')
+        flight_depart = request.args.get('flight_depart')
+        Class = request.args.get('Class')
+
+        seatArrayX = todo_ref_seat.document(date_depart).collection(flight_depart).document(flight_depart).get().get(Class.split('_')[0]+'_booked')
+        if request.args.get('date_return'):
+            date_return = request.args.get('date_return')
+            flight_return = request.args.get('flight_return')
+            seatArrayY = todo_ref_seat.document(date_return).collection(flight_return).document(flight_return).get().get(Class.split('_')[0]+'_booked')
+            return jsonify({"depart":seatArrayX, "return":seatArrayY}), 200
+        else:
+            return jsonify({"depart":seatArrayX}), 200
+        
+    except Exception as e:
+        return f"An Error Occured: {e}"
+
 
 @app.route('/updateSeat', methods=['POST', 'PUT'])
 def update_seat():
@@ -258,7 +283,7 @@ def check_flight():
         for flight in todo:
             tmp = [doc.to_dict() for doc in todo_ref_seat.document(date).collection(flight['id']).get()]
             if(len(tmp)==0):
-                 todo_ref_seat.document(date).collection(flight['id']).document(flight['id']).set({"id":flight['id'],"Bs_left":30 ,"Eco_left":250,"F_left":10})
+                 todo_ref_seat.document(date).collection(flight['id']).document(flight['id']).set({"id":flight['id'],"Bs_left":30 ,"Eco_left":250,"F_left":10, "Bs_booked":[], "Eco_booked":[], "F_booked":[]})
             x = todo_ref_seat.document(date).collection(flight['id']).document(flight['id']).get().get(Class)
             if x>=int(guest) :
                 y = todo_ref_price.document(flight['id']).get().get(strDay+'_'+Class.split('_')[0].lower())
@@ -271,15 +296,47 @@ def check_flight():
 
 @app.route('/booking',methods=['POST'])
 def booking():
-    todo_ref_book.document().set(request.json)
+    print(request.json)
+    ref = todo_ref_book.document()
+    bookig_id = ref.set(request.json)
     x = todo_ref_seat.document(request.json['date_depart']).collection(request.json['flight_depart']).document(request.json['flight_depart']).get().get(request.json['Class'])
     x = x-len(request.json['personal_data'])
     todo_ref_seat.document(request.json['date_depart']).collection(request.json['flight_depart']).document(request.json['flight_depart']).update({request.json['Class']:x})
+
+    seatArrayX = todo_ref_seat.document(request.json['date_depart']).collection(request.json['flight_depart']).document(request.json['flight_depart']).get().get(request.json['Class'].split('_')[0]+'_booked')
+    seatArrayX.extend(request.json['seat_depart'])
+    todo_ref_seat.document(request.json['date_depart']).collection(request.json['flight_depart']).document(request.json['flight_depart']).update({request.json['Class'].split('_')[0]+'_booked':seatArrayX})
 
     data = json.loads(request.data)
     if('date_return' in data and 'flight_return' in data):
         y = todo_ref_seat.document(request.json['date_return']).collection(request.json['flight_return']).document(request.json['flight_return']).get().get(request.json['Class'])
         y = y-len(request.json['personal_data'])
         todo_ref_seat.document(request.json['date_return']).collection(request.json['flight_return']).document(request.json['flight_return']).update({request.json['Class']:y})
-    return jsonify({"success": True}), 200
 
+        seatArrayY = todo_ref_seat.document(request.json['date_return']).collection(request.json['flight_return']).document(request.json['flight_return']).get().get(request.json['Class'].split('_')[0]+'_booked')
+        seatArrayY.extend(request.json['seat_return'])
+        todo_ref_seat.document(request.json['date_return']).collection(request.json['flight_return']).document(request.json['flight_return']).update({request.json['Class'].split('_')[0]+'_booked':seatArrayY})
+    return jsonify({"id": ref.id}), 200
+
+@app.route('/result',methods=['GET'])
+def result():
+    print(request.json)
+    booking_id = request.args.get('id')
+    todo_ref_book.document(booking_id)
+    if todo_ref_book.document(booking_id).get().exists:
+        book = todo_ref_book.document(booking_id).get().to_dict()
+        del book['Address']
+        del book['Email']
+        del book['Zip']
+        del book['payment']
+
+        flight_depart = todo_ref_flight.document(book['flight_depart']).get().to_dict()
+
+        book.update({'flight_depart':flight_depart})
+        if not book['isOneway']:
+            flight_return = todo_ref_flight.document(book['flight_return']).get().to_dict()
+            book.update({'flight_return':flight_return})
+
+        return jsonify(book), 200
+    else:
+        return f"Not Found"
