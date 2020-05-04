@@ -1,0 +1,15 @@
+1. ติดตั้ง python (ลง pip ด้วย) https://www.python.org/downloads/
+2. สร้าง virtualenv https://medium.com/@nonthakon/virtualenv-%E0%B9%83%E0%B8%99-python-3-windows-10d3dd89a0a7
+    1 window
+        - เปิด terminal และรัน pip install virtualenv บน terminal
+        - cd ไปที่โฟลเดอร์ที่โค้ดอยู่และรัน virtualenv venv (จะมีโฟลเดอร์ venv เพิ่มขึ้นมา)
+        - activate ตัว virtualenv โดยการ พิมพ์ .venv/Scripts/activate บน terminal(จะมี (venv) ขึ้นมาข้างหน้าบรรทัดของ terminal)
+        - ติดตั้ง libary ของ Flask และ firebase-admin ด้วยการพิมพ์ pip install Flask firebase-admin
+        - จากนั้นพิมพ์คำสั่ง set FLASK_APP=projectscript.py บน terminal
+        - รันด้วย Flask run
+    2 mac
+        - เปิด terminal cd ไปที่โฟลเดอร์ที่โค้ดอยู่และรัน python3 -m venv venv (จะมีโฟลเดอร์ venv เพิ่มขึ้นมา)
+        - activate ตัว virtualenv โดยการ พิมพ์ .venv/bin/activate บน terminal(จะมี (venv) ขึ้นมาข้างหน้าบรรทัดของ terminal)
+        - ติดตั้ง libary ของ Flask และ firebase-admin ด้วยการพิมพ์ pip install Flask firebase-admin
+        - จากนั้นพิมพ์คำสั่ง export FLASK_APP=projectscript.py บน terminal
+        - รันด้วย Flask run
